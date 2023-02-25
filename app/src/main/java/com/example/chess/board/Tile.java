@@ -1,5 +1,6 @@
-package com.example.chess;
+package com.example.chess.board;
 
+import  com.example.chess.pieces.Piece;
 public abstract class Tile {
     int _tileCoordinate;
     Tile(int tileCoordinate)
@@ -19,6 +20,23 @@ public abstract class Tile {
         @Override
         public Piece GetPiece() {
             return null;
+        }
+    }
+    public static final class OccupiedTile extends Tile{
+        Piece _pieceOnTile;
+        OccupiedTile(int tileCoordinate, Piece pieceOnTile) {
+            super(tileCoordinate);
+            _pieceOnTile = pieceOnTile;
+        }
+
+        @Override
+        public boolean IsTileOccupied() {
+            return true;
+        }
+
+        @Override
+        public Piece GetPiece() {
+            return this._pieceOnTile;
         }
     }
 }
