@@ -3,6 +3,7 @@ package com.example.chess.pieces;
 import com.example.chess.board.Board;
 import com.example.chess.board.Move;
 
+import java.util.Collection;
 import java.util.List;
 
 public abstract class Piece {
@@ -15,6 +16,10 @@ public abstract class Piece {
         _piecePosition = piecePosition;
         _pieceAlliance = pieceAlliance;
     }
-    public abstract List<Move> CalculateLegalMoves(final Board board);
+    public Alliance GetPieceAlliance()
+    {
+        return this._pieceAlliance;
+    }
+    public abstract Collection<Move> CalculateLegalMoves(final Board board);
 }
 
