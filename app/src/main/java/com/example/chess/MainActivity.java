@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
+
     private static final String TAG1 = "TAG1";
     ChessModel chessModel = new ChessModel();
     @Override
