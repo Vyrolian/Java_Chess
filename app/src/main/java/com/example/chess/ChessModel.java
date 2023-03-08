@@ -10,29 +10,29 @@ public class ChessModel {
     public ChessModel() {
       reset();
     }
-    private void reset() {
+    void reset() {
         piecesBox.clear();
-        for (int i = 0; i <=1; i++){
-            piecesBox.add(new ChessPiece(0 + i * 7,0, ChessPlayer.WHITE, ChessRank.ROOK));
-            piecesBox.add(new ChessPiece(0 + i * 7,7, ChessPlayer.BLACK, ChessRank.ROOK));
+        for (int i = 0; i <= 1; i++) {
+            piecesBox.add(new ChessPiece(0 + i * 7, 0, ChessPlayer.WHITE, ChessRank.ROOK, R.drawable.wr));
+            piecesBox.add(new ChessPiece(0 + i * 7, 7, ChessPlayer.BLACK, ChessRank.ROOK, R.drawable.br));
 
-            piecesBox.add(new ChessPiece(1 + i * 5,0, ChessPlayer.WHITE, ChessRank.KNIGHT));
-            piecesBox.add(new ChessPiece(1 + i * 5,7, ChessPlayer.BLACK, ChessRank.KNIGHT));
+            piecesBox.add(new ChessPiece(1 + i * 5, 0, ChessPlayer.WHITE, ChessRank.KNIGHT,R.drawable.wn));
+            piecesBox.add(new ChessPiece(1 + i * 5, 7, ChessPlayer.BLACK, ChessRank.KNIGHT,R.drawable.bn));
 
-            piecesBox.add(new ChessPiece(2 + i * 3,0, ChessPlayer.WHITE, ChessRank.BISHOP));
-            piecesBox.add(new ChessPiece(2 + i * 3,7, ChessPlayer.BLACK, ChessRank.BISHOP));
+            piecesBox.add(new ChessPiece(2 + i * 3 ,0 ,ChessPlayer.WHITE ,ChessRank.BISHOP ,R.drawable.wb));
+            piecesBox.add(new ChessPiece(2 + i * 3 ,7 ,ChessPlayer.BLACK ,ChessRank.BISHOP ,R.drawable.bb));
         }
-        for (int i = 0; i < 8; i++){
-            piecesBox.add(new ChessPiece(i,6, ChessPlayer.WHITE, ChessRank.PAWN));
-            piecesBox.add(new ChessPiece(i,1, ChessPlayer.BLACK, ChessRank.PAWN));
+        for (int i = 0; i <8 ;i++){
+            piecesBox.add(new ChessPiece(i ,1 ,ChessPlayer.WHITE ,ChessRank.PAWN,R.drawable.wp));
+            piecesBox.add(new ChessPiece(i ,6 ,ChessPlayer.BLACK ,ChessRank.PAWN,R.drawable.bp));
         }
-        piecesBox.add(new ChessPiece(3,0, ChessPlayer.WHITE, ChessRank.QUEEN));
-        piecesBox.add(new ChessPiece(3,7, ChessPlayer.BLACK, ChessRank.QUEEN));
-        piecesBox.add(new ChessPiece(4,0, ChessPlayer.WHITE, ChessRank.KING));
-        piecesBox.add(new ChessPiece(4,7, ChessPlayer.BLACK, ChessRank.KING));
+        piecesBox.add(new ChessPiece(3 ,0 ,ChessPlayer.WHITE ,ChessRank.QUEEN,R.drawable.wq));
+        piecesBox.add(new ChessPiece(3 ,7 ,ChessPlayer.BLACK ,ChessRank.QUEEN,R.drawable.bq));
+        piecesBox.add(new ChessPiece(4 ,0 ,ChessPlayer.WHITE ,ChessRank.KING,R.drawable.wk));
+        piecesBox.add(new ChessPiece(4,7, ChessPlayer.BLACK, ChessRank.KING, R.drawable.bk));
 
     }
-    private ChessPiece pieceAt(int col, int row) {
+     ChessPiece pieceAt(int col, int row) {
         for (ChessPiece piece : piecesBox) {
             if (piece.getCol() == col && piece.getRow() == row) {
                 return piece;
