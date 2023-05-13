@@ -30,7 +30,24 @@ public class ChessModel {
         piecesBox.add(new ChessPiece(3 ,7 ,ChessPlayer.BLACK ,ChessRank.QUEEN,R.drawable.bq));
         piecesBox.add(new ChessPiece(4 ,0 ,ChessPlayer.WHITE ,ChessRank.KING,R.drawable.wk));
         piecesBox.add(new ChessPiece(4,7, ChessPlayer.BLACK, ChessRank.KING, R.drawable.bk));
+        movePiece(0, 1, 0, 3);
+    }
+    public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
+        ChessPiece movingPiece = pieceAt(fromCol, fromRow);
+        ChessPiece targetPiece = pieceAt(toCol, toRow);
 
+        if (targetPiece != null) {
+            if (targetPiece.getPlayer().equals(movingPiece.getPlayer())) {
+                return;
+            }
+            piecesBox.remove(targetPiece);
+        }
+        if (movingPiece != null) {
+            movingPiece.col = toCol;
+            movingPiece.row = toRow;
+        } else {
+            return;
+        }
     }
      ChessPiece pieceAt(int col, int row) {
         for (ChessPiece piece : piecesBox) {

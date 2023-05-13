@@ -1,11 +1,15 @@
 package com.example.chess;
 
+import static com.example.chess.MainActivity.TAG1;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -23,6 +27,9 @@ public class ChessView extends View {
         super(context, attrs);
         loadDrawables();
     }
+    private final float scaleFactor = 0.9f;
+
+
     float originX = 200f;
     float originY = 200f;
     float cellSide = 130f;
@@ -50,22 +57,44 @@ public class ChessView extends View {
         }
     }
     Paint paint = new Paint();
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Log.d(TAG1, "down");
+                break;case MotionEvent.ACTION_MOVE:
+                Log.d(TAG1, "move");
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d(TAG1, "up");
+                break;
+        }
+        return true;
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        Log.d(TAG1, "(" + getWidth() + getHeight() + ")");
+        if (canvas != null) {
+            int chessBoardSide = (int) (Math.min(getWidth(), getHeight()) * scaleFactor);
+
+            cellSide = chessBoardSide / 8;
+            originX = (getWidth() - chessBoardSide) / 2f;
+            originY = (getHeight() - chessBoardSide) / 2f;
+        }
         drawChessboard(canvas);
         drawPieces(canvas);
     }
 
     private void drawPieces(Canvas canvas) {
 
-        ChessModel chessModel = new ChessModel();
-        chessModel.reset();
+
 
         for (int row = 0; row <= 7; row++) {
             for (int col = 0; col <= 7; col++) {
-                ChessPiece piece = chessModel.pieceAt(col, row);
+                ChessPiece piece = chessDelegate.pieceAt(col, row);
                 if (piece != null) {
                     drawPieceAt(canvas, col, row, piece.resID);
                 }
@@ -74,6 +103,7 @@ public class ChessView extends View {
         }
 
     }
+    ChessDelegate chessDelegate = null;
     private void drawPieceAt(Canvas canvas, int col, int row, int resID) {
         Drawable wQDrawable = drawables.get(resID);
         wQDrawable.setBounds((int) (originX + col * cellSide), (int)(originY + (7 - row) * cellSide), (int)(originX + (col+1) * cellSide), (int)(originY + (7 - row+1)*cellSide));

@@ -1,8 +1,8 @@
 package com.example.chess;
 
 public class ChessPiece {
-    private final int col;
-    private final int row;
+    int col;
+    int row;
     private final ChessPlayer player;
     private final ChessRank rank;
     public final int resID;
