@@ -57,20 +57,38 @@ public class ChessView extends View {
         }
     }
     Paint paint = new Paint();
+    private int fromCol = -1;
+    private int fromRow = -1;
+    private float movingPieceX = -1f;
+    private float movingPieceY = -1f;
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Log.d(TAG1, "down");
-                break;case MotionEvent.ACTION_MOVE:
+                fromCol = (int) ((event.getX() - originX) / cellSide);
+                fromRow= 7 - (int) ((event.getY() - originY) / cellSide);
+                Log.d(TAG1, "down at " + fromRow);
+                break;
+                case MotionEvent.ACTION_MOVE:
                 Log.d(TAG1, "move");
+                movingPieceX = event.getX();
+                movingPieceY = event.getY();
+                invalidate();
                 break;
             case MotionEvent.ACTION_UP:
+                int col = (int) ((event.getX() - originX) / cellSide);
+                int row = 7 - (int) ((event.getY() - originY) / cellSide);
+
                 Log.d(TAG1, "up");
+                chessDelegate.movePiece(fromCol, fromRow, col, row);
                 break;
+
         }
         return true;
     }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -94,14 +112,24 @@ public class ChessView extends View {
 
         for (int row = 0; row <= 7; row++) {
             for (int col = 0; col <= 7; col++) {
-                ChessPiece piece = chessDelegate.pieceAt(col, row);
-                if (piece != null) {
-                    drawPieceAt(canvas, col, row, piece.resID);
-                }
+
+                    ChessPiece piece = chessDelegate.pieceAt(col, row);
+                    if (piece != null) {
+                        drawPieceAt(canvas, col, row, piece.resID);
+                    }
 
             }
         }
-
+        if (chessDelegate != null) {
+            ChessPiece piece = chessDelegate.pieceAt(fromCol, fromRow);
+            if (piece != null) {
+                Drawable drawable = drawables.get(piece.resID);
+                if (drawable != null) {
+                    drawable.setBounds((int) (movingPieceX - cellSide/2), (int) (movingPieceY - cellSide/2), (int) (movingPieceX + cellSide/2), (int) (movingPieceY+cellSide/2));
+                    drawable.draw(canvas);
+                }
+            }
+        }
     }
     ChessDelegate chessDelegate = null;
     private void drawPieceAt(Canvas canvas, int col, int row, int resID) {

@@ -33,6 +33,7 @@ public class ChessModel {
         movePiece(0, 1, 0, 3);
     }
     public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
+        if (fromCol == toCol && fromRow == toRow) return;
         ChessPiece movingPiece = pieceAt(fromCol, fromRow);
         ChessPiece targetPiece = pieceAt(toCol, toRow);
 
@@ -43,6 +44,8 @@ public class ChessModel {
             piecesBox.remove(targetPiece);
         }
         if (movingPiece != null) {
+            piecesBox.remove(movingPiece);
+            piecesBox.add(new ChessPiece(toCol, toRow, movingPiece.getPlayer(), movingPiece.getRank(), movingPiece.resID));
             movingPiece.col = toCol;
             movingPiece.row = toRow;
         } else {

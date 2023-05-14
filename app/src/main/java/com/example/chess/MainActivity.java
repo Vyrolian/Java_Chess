@@ -25,4 +25,11 @@ public class MainActivity extends AppCompatActivity implements ChessDelegate{
     public ChessPiece pieceAt(int col, int row) {
         return chessModel.pieceAt(col, row);
     }
+
+    @Override
+    public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
+        chessModel.movePiece(fromCol, fromRow, toCol, toRow);
+        ChessView chessView = findViewById(R.id.chess_view);
+        chessView.invalidate();
+    }
 }
