@@ -30,27 +30,29 @@ public class ChessModel {
         piecesBox.add(new ChessPiece(3 ,7 ,ChessPlayer.BLACK ,ChessRank.QUEEN,R.drawable.bq));
         piecesBox.add(new ChessPiece(4 ,0 ,ChessPlayer.WHITE ,ChessRank.KING,R.drawable.wk));
         piecesBox.add(new ChessPiece(4,7, ChessPlayer.BLACK, ChessRank.KING, R.drawable.bk));
-        movePiece(0, 1, 0, 3);
+
     }
     public void movePiece(int fromCol, int fromRow, int toCol, int toRow) {
+        // If source and destination are the same, there's nothing to do
         if (fromCol == toCol && fromRow == toRow) return;
+
         ChessPiece movingPiece = pieceAt(fromCol, fromRow);
+        // If there's no piece to move, we should return without doing anything
+        if (movingPiece == null) return;
+
         ChessPiece targetPiece = pieceAt(toCol, toRow);
 
-        if (targetPiece != null) {
-            if (targetPiece.getPlayer().equals(movingPiece.getPlayer())) {
-                return;
-            }
-            piecesBox.remove(targetPiece);
-        }
-        if (movingPiece != null) {
-            piecesBox.remove(movingPiece);
-            piecesBox.add(new ChessPiece(toCol, toRow, movingPiece.getPlayer(), movingPiece.getRank(), movingPiece.resID));
-            movingPiece.col = toCol;
-            movingPiece.row = toRow;
-        } else {
-            return;
-        }
+        // If the destination square is occupied by a piece of the same player, return without doing anything
+        if (targetPiece != null && targetPiece.getPlayer().equals(movingPiece.getPlayer())) return;
+
+        // If there is a piece at the destination square (that is not of the same player), remove it
+        if (targetPiece != null) piecesBox.remove(targetPiece);
+
+        // Remove the moving piece from its original position
+        piecesBox.remove(movingPiece);
+
+        // Add a new piece to the destination position with the same properties as the moving piece
+        piecesBox.add(new ChessPiece(toCol, toRow, movingPiece.getPlayer(), movingPiece.getRank(), movingPiece.resID));
     }
      ChessPiece pieceAt(int col, int row) {
         for (ChessPiece piece : piecesBox) {
